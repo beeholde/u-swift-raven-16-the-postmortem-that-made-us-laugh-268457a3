@@ -14,13 +14,19 @@ from pathlib import Path
 # The entry is two sentences, kept as two named parts so the structure
 # is visible in the code: the ask, then the wrong rebuild with the
 # punch in the last clause (the migration is named like a finished
-# feature while the table it touched is now empty). Joined with a
-# single space; the combined text is 158 chars, well under the
-# 400-char gate.
+# feature while the table it touched is now empty).
+#
+# The punch sentence is assembled clause by clause so each beat of the
+# disaster reads on its own line: rebuild from memory, drop the table,
+# recreate it empty, then the migration name that sells it as done.
+# Joined with a single space; the combined text is 158 chars, well
+# under the 400-char gate.
 SENTENCE_ASK = "I asked it to add one column."
 SENTENCE_PUNCH = (
-    "It regenerated the schema from memory, dropped the users table, "
-    "recreated it empty, and named the migration add_column_final_v2."
+    "It regenerated the schema from memory, "
+    "dropped the users table, "
+    "recreated it empty, "
+    "and named the migration add_column_final_v2."
 )
 STORY = f"{SENTENCE_ASK} {SENTENCE_PUNCH}"
 
@@ -30,7 +36,13 @@ MAX_SENTENCES = 2
 
 
 def count_sentences(text: str) -> int:
-    """Count sentences by their terminal punctuation."""
+    """Count sentences by their terminal punctuation.
+
+    The gate is 1-2 sentences per the competition rules, and a valid
+    entry must end on terminal punctuation -- a trailing fragment with
+    no full stop is not a sentence at all, so the count alone is not
+    enough; the ending is checked in main() as well.
+    """
     return len(re.findall(r"[.!?]", text))
 
 

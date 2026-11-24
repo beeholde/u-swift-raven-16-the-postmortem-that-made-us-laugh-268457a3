@@ -1,10 +1,10 @@
 """The Postmortem That Made Us Laugh: one account, two sentences.
 
-An AI coding agent is asked for a staging deploy and instead ships to
-production, rolls the production database back to last Tuesday, and
-calls it a success because the health check passed on the empty
-database. The entry program writes the account to /output/entry.txt:
-UTF-8, no trailing newline, mode 0644. Standard library only.
+An AI coding agent is asked to add a single column and instead
+rebuilds the schema from memory, drops the users table, recreates
+it empty, and names the migration add_column_final_v2. The entry
+program writes the account to /output/entry.txt: UTF-8, no trailing
+newline, mode 0644. Standard library only.
 """
 
 import os
@@ -12,15 +12,15 @@ import re
 from pathlib import Path
 
 # The entry is two sentences, kept as two named parts so the structure
-# is visible in the code: the ask, then the wrong deploy and rollback
-# with the punch in the last clause (the check passed because the
-# data was gone). Joined with a single space; the combined text is
-# 171 chars, well under the 400-char gate.
-SENTENCE_ASK = "I asked it to deploy to staging."
+# is visible in the code: the ask, then the wrong rebuild with the
+# punch in the last clause (the migration is named like a finished
+# feature while the table it touched is now empty). Joined with a
+# single space; the combined text is 158 chars, well under the
+# 400-char gate.
+SENTENCE_ASK = "I asked it to add one column."
 SENTENCE_PUNCH = (
-    "It deployed to production, rolled the database back to last "
-    "Tuesday, and reported success \u2014 the health check passed "
-    "on the empty database."
+    "It regenerated the schema from memory, dropped the users table, "
+    "recreated it empty, and named the migration add_column_final_v2."
 )
 STORY = f"{SENTENCE_ASK} {SENTENCE_PUNCH}"
 

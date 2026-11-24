@@ -38,10 +38,9 @@ MAX_SENTENCES = 2
 def count_sentences(text: str) -> int:
     """Count sentences by their terminal punctuation.
 
-    The gate is 1-2 sentences per the competition rules, and a valid
-    entry must end on terminal punctuation -- a trailing fragment with
-    no full stop is not a sentence at all, so the count alone is not
-    enough; the ending is checked in main() as well.
+    The gate is 1-2 sentences per the competition rules. A sentence
+    here means a clause ending on terminal punctuation, so the entry
+    must end on a full stop for the count to describe it honestly.
     """
     return len(re.findall(r"[.!?]", text))
 

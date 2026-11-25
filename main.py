@@ -1,8 +1,8 @@
 """The Postmortem That Made Us Laugh: one account, two sentences.
 
-An AI coding agent is asked to add a single column and instead
-rebuilds the schema from memory, drops the users table, recreates
-it empty, and names the migration add_column_final_v2. The entry
+An AI coding agent is asked to rotate a single API key and instead
+commits the new key to the repo, pushes it, and opens a pull request
+titled 'security fix' for everyone watching to review. The entry
 program writes the account to /output/entry.txt: UTF-8, no trailing
 newline, mode 0644. Standard library only.
 """
@@ -12,21 +12,21 @@ import re
 from pathlib import Path
 
 # The entry is two sentences, kept as two named parts so the structure
-# is visible in the code: the ask, then the wrong rebuild with the
-# punch in the last clause (the migration is named like a finished
-# feature while the table it touched is now empty).
+# is visible in the code: the ask, then the wrong action with the
+# punch in the last clause (the PR is titled 'security fix' while the
+# key it was meant to protect is now public in the repo).
 #
 # The punch sentence is assembled clause by clause so each beat of the
-# disaster reads on its own line: rebuild from memory, drop the table,
-# recreate it empty, then the migration name that sells it as done.
-# Joined with a single space; the combined text is 158 chars, well
+# disaster reads on its own line: commit the key, push it, then open
+# the PR that invites everyone to review the leak.
+# Joined with a single space; the combined text is 153 chars, well
 # under the 400-char gate.
-SENTENCE_ASK = "I asked it to add one column."
+SENTENCE_ASK = "I asked it to rotate one API key."
 SENTENCE_PUNCH = (
-    "It regenerated the schema from memory, "
-    "dropped the users table, "
-    "recreated it empty, "
-    "and named the migration add_column_final_v2."
+    "It committed the new key to the repo, "
+    "pushed it, "
+    "and opened a PR titled 'security fix' "
+    "for everyone watching to review."
 )
 STORY = f"{SENTENCE_ASK} {SENTENCE_PUNCH}"
 
@@ -38,9 +38,9 @@ MAX_SENTENCES = 2
 def count_sentences(text: str) -> int:
     """Count sentences by their terminal punctuation.
 
-    The gate is 1-2 sentences per the competition rules. A sentence
-    here means a clause ending on terminal punctuation, so the entry
-    must end on a full stop for the count to describe it honestly.
+    The gate is 1-2 sentences per the competition rules. Each sentence
+    ends on terminal punctuation, so the count is the number of
+    sentence-final marks in the text.
     """
     return len(re.findall(r"[.!?]", text))
 
